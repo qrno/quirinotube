@@ -1,5 +1,14 @@
+const https = require('https');
+const fs = require('fs');
 const WebSocket = require("ws")
-const wss = new WebSocket.Server({ port: 8082 })
+const server = https.createServer({
+	cert: fs.readFileSync('/etc/letsencrypt/live/quirino.net/fullchain.pem'),
+	key: fs.readFileSync('/etc/letsencrypt/live/quirino.net/privkey.pem')
+});
+
+const wss = new WebSocket.Server({ server });
+
+server.listen(8082);
 
 // Function that generates an unique ID
 getUniqueID = function () {

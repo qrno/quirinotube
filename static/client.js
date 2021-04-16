@@ -26,7 +26,7 @@ function playVideoId(id, startSeconds=0) { player.loadVideoById(id, startSeconds
 // WEBSOCKETS STUFF
 // =========================
 
-const ws = new WebSocket("ws://0.0.0.0:8082")
+const ws = new WebSocket("wss://quirino.net:8082")
 
 ws.addEventListener("open", () => {
 	console.log("Connected to server")
