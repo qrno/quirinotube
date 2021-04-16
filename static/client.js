@@ -55,7 +55,7 @@ const sendMessage = (message) => {
 
 const sendId = () => {
 	var myString = url_input.value
-	let myRegexp = /v=(\w+)/g
+	let myRegexp = /v=([\w-]+)/g
 	var match = myRegexp.exec(url_input.value);
 
 	if (match != null) {
