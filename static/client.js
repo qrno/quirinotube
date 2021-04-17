@@ -21,6 +21,7 @@ function onPlayerStateChange(event) {  console.log("Something changed! IDK what"
 function playVideo() { player.playVideo(); }
 function pauseVideo() { player.pauseVideo(); }
 function playVideoId(id, startSeconds=0) { player.loadVideoById(id, startSeconds) }
+function seekTo(seconds=0) { player.seekTo(seconds) }
 
 // =========================
 // WEBSOCKETS STUFF
@@ -40,6 +41,7 @@ ws.addEventListener("message", (unparsedData) => {
 	if (data.type == "videoid") playVideoId(data.videoid);
 	if (data.type == "play")    playVideo();
 	if (data.type == "pause")   pauseVideo();
+	if (data.type == "sync")    seekTo(data.seconds);
 })
 
 ws.addEventListener("close", () => {
@@ -67,14 +69,17 @@ const sendId = () => {
 	}
 }
 
-const sendPlay = () => sendMessage({type: "play"})
+const sendPlay  = () => sendMessage({type: "play"})
 const sendPause = () => sendMessage({type: "pause"})
+const sendSync  = () => sendMessage({type: "sync", seconds: player.getCurrentTime() })
 
 url_input			 = document.getElementById("url-input")
 url_button		 = document.getElementById("url-button")
 play_button		 = document.getElementById("play-button")
 pause_button   = document.getElementById("pause-button")
+sync_button		 = document.getElementById("sync-button")
 
 url_button.addEventListener("click", sendId)
 play_button.addEventListener("click", sendPlay)
 pause_button.addEventListener("click", sendPause)
+sync_button.addEventListener("click", sendSync)
